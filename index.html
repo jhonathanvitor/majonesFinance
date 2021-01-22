@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>majones.finance$</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,100&display=swap" rel="stylesheet">
@@ -16,41 +16,52 @@
 <body>
 
     <header>
-        <h1 id="logo">majones.finance$</h1>
+        <img src="./imagens/logo-majones2.svg" alt="logo-majones" style="width: 17rem; padding: 3.5rem 0 0 0;">
     </header>
 
     <main class="container">  
 
         <section id="balance">
-            <h2>Balanço</h2>
-
+            <h2 class="sr-only">Balanço</h2>
             <div class="card">
-                <h3>Entrada</h3>
+                <h3>
+                    <span>Entrada</span>
+                    <img src="./imagens/seta-para-cima.svg" alt="imagem de entrada">
+                </h3>
                 <p>R$ 5.000,00</p>
             </div>
 
             <div class="card">
-                <h3>Saídas</h3>
+                <h3>
+                    <span>Saída</span>
+                    <img src="./imagens/verifica.svg" alt="imagem de saída">
+                </h3>
                 <p>R$ 2.000,00</p>
             </div>
 
             <div class="card-tatle">
-                <h3>Total</h3>
-            </div>
-            <div class="card total">
+                <h3>
+                    <span>Total</span>
+                    <img src="./imagens/dolar.svg" alt="imagem de Total">
+                </h3>
                 <p>R$ 3.000,00</p>
             </div>
+            
 
         </section>
 
         <section id="transaction">
-            <h2>Transações</h2>
+            <h2 class="sr-only">Transações</h2>
+
+            <a href="#" class="button new">+ Novas Transações</a>
+
             <table id="data-table">
                 <thead>
                     <tr>
                         <th>Descrição</th>
                         <th>Valor</th>
                         <th>Data</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,16 +69,25 @@
                         <td class="description">Luz</td>
                         <td class="expense">- R$ 500,00</td>
                         <td class="date">23/01/2021</td>
+                        <td>
+                            <img src="./imagens/menos.svg" alt="remover Transações">
+                        </td>
                     </tr>
                     <tr>
                         <td class="description">Desenvolmento web</td>
                         <td class="income">R$ 5.000,00</td>
                         <td class="date">23/01/2021</td>
+                        <td>
+                            <img src="./imagens/menos.svg" alt="remover Transações">
+                        </td>
                     </tr>
                     <tr>
                         <td class="description">Alugue</td>
                         <td class="expense">R$ 700,00</td>
                         <td class="date">23/01/2021</td>
+                        <td>
+                            <img src="./imagens/menos.svg" alt="remover Transações">
+                        </td>
                     </tr>
                 </tbody>
             </table>
