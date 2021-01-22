@@ -51,16 +51,15 @@ a{
     text-decoration: none;
 }
 
-.button.new {
-    display: inline-block;
-    margin-top: 2rem;
-    margin-bottom: 0.8rem;
-}
 
 a:hover {
     color: #3dd705;
 }
 
+.button.new {
+    display: inline-block;
+    margin-bottom: 0.8rem;
+}
 /*header =================*/
 header {
     background: #4C012C;
@@ -147,12 +146,15 @@ header {
 
 
 /*Table =================*/
-#data-table {
+#transaction {
     display: block;
+    width: 100%;
+    overflow-x: auto;
+}
+#data-table {
     width: 100%;
     border-spacing: 0 0.5rem;
     color: #969cb3;
-    overflow-x: auto;
 }
 
 table thead tr th:first-child,
