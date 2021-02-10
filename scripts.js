@@ -57,19 +57,32 @@ const Transaction = {
         return expense;
     },
 
-    total() {
-        return transaction.income() + transaction.expense()
+    total() {        
+        return Transaction.incomes() + Transaction.expenses()
     }
 }
 
-const DOM = {
-    transactionsContainer: document.querySelector('#data-table tbody'),
+var DOM = {
+    /* Fora do escopo nao funciona! 
+       Pois o objeto esta sendo criado antes da DOM carregar
+    */
+    transactionsContainer: document.querySelector('#tbody-table'),
 
-    addTransaction(transaction, index) {
+    addTransaction: function (transaction) {
         const tr = document.createElement('tr')
         tr.innerHTML = DOM.innerHTMLTransaction(transaction)
-
-        DOM.transactionsContainer.appendChild(tr)
+        
+        /* Dentro do escopo funciona!
+        - Atribuindo com 'querySelector'
+            var transContainer = document.querySelector('#tbody-table');
+        - Atribuindo com 'getElementById'
+            var transContainer = document.getElementById('tbody-table');
+        - ou usando document direto das duas formas
+            document.querySelector('#tbody-table').appendChild(tr)
+            document.getElementById('tbody-table').appendChild(tr)
+        */
+        var transContainer = document.getElementById('tbody-table');
+        transContainer.appendChild(tr);
     },
     innerHTMLTransaction(transaction) {
         const CSSclass = transaction.amount > 0 ? "income" : "expense"
@@ -114,16 +127,31 @@ const Utils = {
     }
 }
 
-transactions.forEach(function (transaction) {
-    DOM.addTransaction(transaction)
-})
 
-DOM.updataBalance()
+function domLoaded() {
+    if (document.readyState === "loading") {
+        console.log("loading")
+    }
+    else {
+
+        transactions.forEach(function (transaction) {
+            DOM.addTransaction(transaction)
+        })
+
+        DOM.updataBalance()
 
 
-Transaction.add({
-    id: 39,
-    description: 'Alo',
-    amount: 299,
-    date: '23/01/20201'
-})
+        Transaction.add({
+            id: 39,
+            description: 'Alo',
+            amount: 299,
+            date: '23/01/20201'
+        })
+    }
+}
+
+window.onload = function() {
+    domLoaded();
+};
+
+//window.addEventListener('DOMContentLoaded', domLoaded, false)
