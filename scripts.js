@@ -7,34 +7,35 @@ const Modal = {
     }
 }
 
-const transactions = [
-    {
-        id: 1,
-        description: 'Luz',
-        amount: -50000,
-        date: '23/01/2021',
-    },
-    {
-        id: 2,
-        description: 'Website',
-        amount: 500000,
-        date: '23/01/2021',
-    },
-    {
-        id: 3,
-        description: 'Internet',
-        amount: 20000,
-        date: '23/01/2021',
-    },
-]
-
 const Transaction = {
-    all: transactions,
+    all: [
+        {
+            description: 'Luz',
+            amount: -50000,
+            date: '23/01/2021',
+        },
+        {
+            description: 'Website',
+            amount: 500000,
+            date: '23/01/2021',
+        },
+        {
+            description: 'Internet',
+            amount: 20000,
+            date: '23/01/2021',
+        },
+    ],
 
     add(transaction) {
         Transaction.all.push(transaction)
 
-        console.log(Transaction.all)
+        App.reload()
+    },
+
+    remove(index) {
+        Transaction.all.splice(index, 1)
+
+        App.reload()
     },
 
     incomes() {
@@ -57,33 +58,23 @@ const Transaction = {
         return expense;
     },
 
-    total() {        
+    total() {
         return Transaction.incomes() + Transaction.expenses()
     }
 }
 
-var DOM = {
-    /* Fora do escopo nao funciona! 
-       Pois o objeto esta sendo criado antes da DOM carregar
-    */
-    transactionsContainer: document.querySelector('#tbody-table'),
+const DOM = {
+    transactionsContainer: document.querySelector('#data-tbody'),
 
-    addTransaction: function (transaction) {
+    addTransaction(transaction, index) {
         const tr = document.createElement('tr')
         tr.innerHTML = DOM.innerHTMLTransaction(transaction)
-        
-        /* Dentro do escopo funciona!
-        - Atribuindo com 'querySelector'
-            var transContainer = document.querySelector('#tbody-table');
-        - Atribuindo com 'getElementById'
-            var transContainer = document.getElementById('tbody-table');
-        - ou usando document direto das duas formas
-            document.querySelector('#tbody-table').appendChild(tr)
-            document.getElementById('tbody-table').appendChild(tr)
-        */
-        var transContainer = document.getElementById('tbody-table');
-        transContainer.appendChild(tr);
+
+        document.getElementById("data-tbody").appendChild(tr);
+
+        // DOM.transContainer.appendChild(tr);
     },
+
     innerHTMLTransaction(transaction) {
         const CSSclass = transaction.amount > 0 ? "income" : "expense"
 
@@ -107,7 +98,12 @@ var DOM = {
         document.getElementById('expenseDisplay').innerHTML = Utils.formatCurrency(Transaction.expenses())
 
         document.getElementById('totalDisplay').innerHTML = Utils.formatCurrency(Transaction.total())
+    },
+
+    clearTransactions() {
+        DOM.transactionsContainer.innerHTML = ""
     }
+
 }
 
 const Utils = {
@@ -127,31 +123,64 @@ const Utils = {
     }
 }
 
+const Form = {
+    description: document.querySelector('input#description'),
+    amount: document.querySelector('input#amount'),
+    date: document.querySelector('input#date'),
 
-function domLoaded() {
-    if (document.readyState === "loading") {
-        console.log("loading")
+    getValues() {
+        return {
+            description: Form.description.value,
+            amount: Form.amount.value,
+            date: Form.date.value
+        }
+    },
+
+    // formatData() {
+    //     console.log('Formatar os dados')
+    // },
+    validateFields() {
+        console.log(Form.getValues())
+    },
+    submit(event) {
+        event.preventDefault()
+
+        //validas todos os campos prenchidos
+        Form.validateFields()
+
+        //formatar os dados para salvar
+        // Form.formatData()
     }
-    else {
 
-        transactions.forEach(function (transaction) {
+}
+
+const App = {
+    init() {
+
+        Transaction.all.forEach(transaction => {
             DOM.addTransaction(transaction)
         })
 
         DOM.updataBalance()
 
+    },
 
-        Transaction.add({
-            id: 39,
-            description: 'Alo',
-            amount: 299,
-            date: '23/01/20201'
-        })
-    }
+    reload() {
+        DOM.clearTransactions()
+        App.init()
+    },
+
 }
 
-window.onload = function() {
-    domLoaded();
-};
+
+App.init()
+
+
+// function domLoaded() {
+// }
+
+// window.onload = function () {
+//     domLoaded();
+// };
 
 //window.addEventListener('DOMContentLoaded', domLoaded, false)
